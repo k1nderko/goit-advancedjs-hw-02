@@ -33,11 +33,14 @@ function startTimer(endDate) {
         title: "Success",
         message: "Timer reached zero!",
       });
+      enableInputsAndButton();
     } else {
       const { days, hours, minutes, seconds } = convertMs(timeDifference);
       updateTimerValues({ days, hours, minutes, seconds });
     }
   }, 1000);
+
+  disableInputsAndButton();
 }
 
 function updateTimerValues({ days, hours, minutes, seconds }) {
@@ -45,6 +48,16 @@ function updateTimerValues({ days, hours, minutes, seconds }) {
   document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
   document.querySelector('[data-minutes]').textContent = addLeadingZero(minutes);
   document.querySelector('[data-seconds]').textContent = addLeadingZero(seconds);
+}
+
+function disableInputsAndButton() {
+  document.querySelector('[data-start]').disabled = true;
+  document.querySelector('#datetime-picker').setAttribute('readonly', 'readonly');
+}
+
+function enableInputsAndButton() {
+  document.querySelector('[data-start]').disabled = false;
+  document.querySelector('#datetime-picker').removeAttribute('readonly');
 }
 
 const datePicker = flatpickr("#datetime-picker", {
@@ -56,15 +69,17 @@ const datePicker = flatpickr("#datetime-picker", {
     const selectedDate = selectedDates[0];
 
     if (!selectedDate) {
-      document.querySelector('[data-start]').disabled = true;
+      disableInputsAndButton();
     } else if (selectedDate <= new Date()) {
-      document.querySelector('[data-start]').disabled = true;
+      disableInputsAndButton();
       window.alert("Please choose a date in the future.");
     } else {
-      document.querySelector('[data-start]').disabled = false;
+      enableInputsAndButton();
     }
   },
 });
+
+disableInputsAndButton();
 
 document.querySelector('[data-start]').addEventListener('click', () => {
   const selectedDate = datePicker.selectedDates[0];

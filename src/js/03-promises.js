@@ -33,4 +33,6 @@ document.querySelector('.form').addEventListener('submit', function(event) {
           iziToast.error({ message: `❌ Rejected promise ${position} in ${delay}ms` });
         });
     }
+
+    this.reset();
 });

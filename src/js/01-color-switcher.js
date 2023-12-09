@@ -4,6 +4,14 @@ function getRandomHexColor() {
 
 let intervalId;
 
+document.addEventListener('DOMContentLoaded', function() {
+  const startButton = document.querySelector('[data-start]');
+  const stopButton = document.querySelector('[data-stop]');
+
+  startButton.disabled = false;
+  stopButton.disabled = true;
+});
+
 document.querySelector('[data-start]').addEventListener('click', startChangingColor);
 document.querySelector('[data-stop]').addEventListener('click', stopChangingColor);
 
